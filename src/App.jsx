@@ -20,7 +20,9 @@ function App() {
                     {/* <Route path="/" element={localStorage.getItem('token') ? <Layout /> : <Navigate to={'/login'} />}>  */}
                         <Route index element={<Dashboard />}></Route>
                         <Route path="/reservations" element={<Reservations/>}></Route>
-                        <Route path="/books" element={<Books />}></Route>
+                        <Route path="/books" element={<Books />}>
+                            <Route path=":id/details" element={<BookDetails />}></Route>
+                        </Route>
                         <Route path="/book/:id/details/" element={<BookDetails />}></Route>
                         <Route path="/member/:id/details/" element={<Member />}></Route>
                         <Route path="/members" element={<AllMember />}></Route>

@@ -97,11 +97,11 @@ const BookDetails = () => {
                                     <td className="py-3 text-gray-600">
                                         {book.reserverList?.map((member, index) => (
                                             <Link 
-                                                key={member._id} 
-                                                to={`/member/${member._id}/details`}
+                                                key={member.userID._id} 
+                                                to={`/member/${member.userID._id}/details`}
                                                 className="text-blue-600 hover:text-blue-800"
                                             >
-                                                {member.name}{index < book.reserverList.length - 1 ? ', ' : ''}
+                                                {member.userID.name}{index < book.reserverList.length - 1 ? ', ' : ''}
                                             </Link>
                                         ))}
                                     </td>

@@ -8,7 +8,7 @@ const Member = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const [dummyState , setDummyState] = useState(null)
+    const [dummyState, setDummyState] = useState(null)
 
     useEffect(() => {
         setLoading(true);
@@ -24,7 +24,7 @@ const Member = () => {
                 setLoading(false);
             });
     }, [dummyState]);
-    
+
     const issueBook = (bookId) => {
         const uid = localStorage.getItem('uid');
         // if (!uid) {
@@ -53,7 +53,7 @@ const Member = () => {
     };
     const returnBook = (bookId) => {
         const uid = localStorage.getItem('uid');
-         
+
         fetch(`http://localhost:3000/returnBook`, {
             method: 'POST',
             headers: {
@@ -75,15 +75,20 @@ const Member = () => {
     };
     return (
         <div>
-            <h1 className="p-6 text-4xl font-bold">Member Details </h1>
+            <h1 className="p-6 text-4xl font-bold md:text-center">Member Details </h1>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
             {member && (
                 <div className="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-md">
                     <h2 className="mb-4 text-3xl font-bold text-gray-800">{member.name}</h2>
-                    <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Email:</span> {member.email}</p>
-                    <p className="mb-4 text-lg text-gray-700"><span className="font-semibold">Phone:</span> {member.phone}</p>
-                    <div className="pt-4 mt-6 border-t">
+                    <div className="grid grid-cols-2 gap-4">
+                        <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Email:</span> {member.email}</p>
+                        <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Phone:</span> {member.phone}</p>
+                        <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Address:</span> {member.address}</p>
+                        <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Member ID:</span> {member._id}</p>
+                        <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Join Date:</span> {new Date(member.membershipDate).toLocaleDateString('en-US')}</p>
+                        <p className="mb-2 text-lg text-gray-700"><span className="font-semibold">Status:</span> <span className={`px-2 py-1 rounded ${member.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{member.isActive ? 'Active' : 'Inactive'}</span></p>
+                    </div>                    <div className="pt-4 mt-6 border-t">
                         <h3 className="mb-3 text-xl font-semibold text-gray-800">Reserved Books</h3>
                         {member.reservedBooks.map((reservedBook, index) => (
                             <div key={index} className="mb-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 bg-white">
