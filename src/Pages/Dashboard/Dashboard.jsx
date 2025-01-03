@@ -43,13 +43,15 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex items-center">
-                            <i className="fas fa-book-reader text-3xl text-purple-500"></i>
-                            <div className="ml-4">
-                                <p className="text-gray-500 text-sm">Borrowed Books</p>
-                                <h3 className="text-2xl font-bold">{statistics.totalBorrowedBooks}</h3>
+                        <Link to={'/borrowed'}>
+                            <div className="flex items-center">
+                                <i className="fas fa-book-reader text-3xl text-purple-500"></i>
+                                <div className="ml-4">
+                                    <p className="text-gray-500 text-sm">Borrowed Books</p>
+                                    <h3 className="text-2xl font-bold">{statistics.totalBorrowedBooks}</h3>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </div>
                     <div className="bg-white p-6 rounded-lg shadow-md">
                         <Link to={'/reservations'}>
@@ -84,7 +86,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 w-full">
                     <div className="bg-white p-6 rounded-lg shadow-md">
                         <h2 className="text-xl font-semibold mb-4">Copies Overview</h2>
                         <div className="space-y-4">

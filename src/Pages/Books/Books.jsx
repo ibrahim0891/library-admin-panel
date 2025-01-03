@@ -12,7 +12,7 @@ const Books = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
     const [totalBooks, setTotalBooks] = useState(0)
-    const limit = 20 // Items per page
+    const limit = 8 // Items per page
 
     useEffect(() => {
         setLoading(true)
@@ -41,18 +41,20 @@ const Books = () => {
 
     return (
         <div className="container min-h-screen p-8 mx-auto relative">
-            <h1 className="mb-8 text-3xl font-bold text-gray-800 text-center">Book Shelf</h1>
+            <div className="flex items-center justify-between  gap-2 mb-8 ">
+                <h1 className="text-3xl font-bold text-gray-800">Book Shelf</h1>
+            </div>
 
             {loading && <p className="text-center text-gray-600">Loading...</p>}
             {error && <p className="text-center text-red-500">{error.message}</p>}
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                 {books && books.map(book => (
                     <div key={book.id} className="bg-white p-4 rounded shadow">
-                        <img src={book.image || 'https://placehold.co/400x300'} alt={book.title} className="w-full h-40 object-cover rounded mb-3" />
+                        <img src={book.image || 'https://placehold.co/300x400'} alt={book.title} className="w-full aspect-[3/4] object-cover rounded mb-3" />
                         <h3 className="text-lg font-semibold text-gray-800 mb-1">{book.title}</h3>
                         <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-                        <Link 
-                            to={`/books/${book._id}/details`}
+                        <Link
+                            to={`/book/${book._id}/details`}
                             className="block text-sm text-blue-600 hover:underline"
                             onClick={() => setSidebarOpen(true)}
                         >
@@ -61,17 +63,17 @@ const Books = () => {
                     </div>
                 ))}
             </div>
-            
+
             {totalPages > 1 && (
                 <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
-                    <button 
+                    <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                         className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-200 text-gray-500' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
                     >
                         Previous
                     </button>
-                    
+
                     {[...Array(totalPages)].map((_, index) => (
                         <button
                             key={index + 1}
@@ -81,8 +83,8 @@ const Books = () => {
                             {index + 1}
                         </button>
                     ))}
-                    
-                    <button 
+
+                    <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                         className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-200 text-gray-500' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
@@ -91,20 +93,20 @@ const Books = () => {
                     </button>
                 </div>
             )}
-            
+
             <p className="text-center text-gray-600 mt-4">
                 Showing page {currentPage} of {totalPages} ({totalBooks} total books)
             </p>
 
-            <div 
-                className={`fixed inset-0 ${sidebarOpen ? 'visible bg-black bg-opacity-50' : 'invisible'}`} 
+            <div
+                className={`fixed inset-0 ${sidebarOpen ? 'visible bg-black bg-opacity-50' : 'invisible'}`}
                 onClick={() => setSidebarOpen(false)}
             >
-                <div 
+                <div
                     className={`fixed top-0 right-0 h-full w-2/3 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    <button 
+                    <button
                         onClick={() => setSidebarOpen(false)}
                         className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
                     >
@@ -116,8 +118,8 @@ const Books = () => {
                         <Outlet />
                     </div>
                 </div>
-            </div>        
-            </div>        
+            </div>
+        </div>
     )
 }
 export default Books; 

@@ -26,96 +26,102 @@ const BookDetails = () => {
             });
     }, []);
     return (
-        <div>
-            <h1 className="p-6 text-3xl font-bold">Book Details</h1>
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
+        <div className="min-h-screen bg-gray-50">
+             
+            {loading && <p className="p-6 text-lg text-gray-600">Loading...</p>}
+            {error && <p className="p-6 text-lg text-red-600">Error: {error.message}</p>}
             
             {book && (
-                <div className="max-w-4xl p-8 mx-auto bg-white rounded-lg shadow-md">
-                    <h2 className="mb-6 text-4xl font-bold text-gray-800">{book.title}</h2>
+                <div className="max-w-7xl p-4 mx-auto md:p-0 lg:p-8">
+                    <div className=" flex flex-col md:flex-row gap-4 md:gap-8"> 
+                        {/* Book Cover Section */}
+                        <div className="flex flex-col items-center md:w-1/3">
+                            <img 
+                                src={book.coverImage || 'https://via.placeholder.com/400x600?text=No+Cover+Available'} 
+                                alt={`Cover of ${book.title}`}
+                                className="w-full max-w-md rounded-lg shadow-lg object-cover"
+                            />
+                            <div className="mt-6 w-full max-w-md">
+                                <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm">
+                                    <div className="text-center flex-1">
+                                        <p className="text-sm text-gray-500">Rating</p>
+                                        <p className="text-xl font-semibold text-gray-800">{book.rating.toFixed(2)}</p>
+                                    </div>
+                                    <div className="text-center flex-1 border-l border-gray-200">
+                                        <p className="text-sm text-gray-500">Available</p>
+                                        <p className="text-xl font-semibold text-gray-800">{book.availableCopies}/{book.totalCopies}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className="mb-8">
-                        <table className="w-full border-collapse">
-                            <tbody>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700 w-1/4">Author</td>
-                                    <td className="py-3 text-gray-600">{book.author}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Genre</td>
-                                    <td className="py-3 text-gray-600">{book.genre.join(', ')}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">ISBN</td>
-                                    <td className="py-3 text-gray-600">{book.ISBN}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Language</td>
-                                    <td className="py-3 text-gray-600">{book.language}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Publication Year</td>
-                                    <td className="py-3 text-gray-600">{book.publicationYear}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Rating</td>
-                                    <td className="py-3 text-gray-600">{book.rating.toFixed(2)}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {/* Book Details Section */}
+                        <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 ">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6 leading-tight">{book.title}</h2>
+                            
+                            <div className="space-y-4 mb-8">
+                                <div className="flex border-b border-gray-100 py-3">
+                                    <span className="w-1/3 text-gray-600">Author</span>
+                                    <span className="w-2/3 font-medium text-gray-900">{book.author}</span>
+                                </div>
+                                <div className="flex border-b border-gray-100 py-3">
+                                    <span className="w-1/3 text-gray-600">Genre</span>
+                                    <span className="w-2/3 font-medium text-gray-900">{book.genre.join(', ')}</span>
+                                </div>
+                                <div className="flex border-b border-gray-100 py-3">
+                                    <span className="w-1/3 text-gray-600">ISBN</span>
+                                    <span className="w-2/3 font-medium text-gray-900">{book.ISBN}</span>
+                                </div>
+                                <div className="flex border-b border-gray-100 py-3">
+                                    <span className="w-1/3 text-gray-600">Language</span>
+                                    <span className="w-2/3 font-medium text-gray-900">{book.language}</span>
+                                </div>
+                                <div className="flex border-b border-gray-100 py-3">
+                                    <span className="w-1/3 text-gray-600">Published</span>
+                                    <span className="w-2/3 font-medium text-gray-900">{book.publicationYear}</span>
+                                </div>
+                            </div>
+
+                            <div className="mb-8">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">Current Status</h3>
+                                <div className="space-y-4">
+                                    <div className="flex flex-col">
+                                        <span className="text-gray-600 mb-2">Borrowed By</span>
+                                        <div className="flex flex-wrap gap-2">
+                                            {book.borrowedBy?.map((member, index) => (
+                                                <Link 
+                                                    key={member.id} 
+                                                    to={`/member/${member._id}/details`}
+                                                    className="inline-block px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+                                                >
+                                                    {member.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-gray-600 mb-2">Reserved By</span>
+                                        <div className="flex flex-wrap gap-2">
+                                            {book.reserverList?.map((member, index) => (
+                                                <Link 
+                                                    key={member.userID._id} 
+                                                    to={`/member/${member.userID._id}/details`}
+                                                    className="inline-block px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+                                                >
+                                                    {member.userID.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="text-xl font-semibold text-gray-900 mb-4">Summary</h3>
+                                <p className="text-gray-700 leading-relaxed">{book.summary}</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div className="mb-8">
-                        <h3 className="mb-4 text-2xl font-semibold text-gray-800">Availability</h3>
-                        <table className="w-full border-collapse">
-                            <tbody>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Total Copies</td>
-                                    <td className="py-3 text-gray-600">{book.totalCopies}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Available Copies</td>
-                                    <td className="py-3 text-gray-600">{book.availableCopies}</td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Borrowed By</td>
-                                    <td className="py-3 text-gray-600">
-                                        {book.borrowedBy?.map((member, index) => (
-                                            <Link 
-                                                key={member.id} 
-                                                to={`/member/${member._id}/details`}
-                                                className="text-blue-600 hover:text-blue-800"
-                                            >
-                                                {member.name}{index < book.borrowedBy.length - 1 ? ', ' : ''}
-                                            </Link>
-                                        ))}
-                                    </td>
-                                </tr>
-                                <tr className="border-b">
-                                    <td className="py-3 font-semibold text-gray-700">Reserved By</td>
-                                    <td className="py-3 text-gray-600">
-                                        {book.reserverList?.map((member, index) => (
-                                            <Link 
-                                                key={member.userID._id} 
-                                                to={`/member/${member.userID._id}/details`}
-                                                className="text-blue-600 hover:text-blue-800"
-                                            >
-                                                {member.userID.name}{index < book.reserverList.length - 1 ? ', ' : ''}
-                                            </Link>
-                                        ))}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div className="mb-8">
-                        <h3 className="mb-4 text-2xl font-semibold text-gray-800">Summary</h3>
-                        <p className="text-gray-600 leading-relaxed">{book.summary}</p>
-                    </div>
-
-                     
                 </div>
             )}
         </div>

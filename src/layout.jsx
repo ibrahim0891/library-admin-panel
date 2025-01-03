@@ -4,18 +4,29 @@ import { Link, Outlet } from "react-router-dom"
 
 const Layout = () => {
     return (
-        <div className=" flex flex-col h-screen">
+        <div className="">
 
             {/* header */}
-            <div className="flex items-center justify-between shadow-md bg-white border-b">
-                <div className="p-6">
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900">Admin Dashboard</h1>
+            <div className="flex flex-col md:flex-row items-center justify-between shadow-md bg-white border-b sticky top-0 z-50 p-4 md:p-6">
+                <div className="mb-4 md:mb-0">
+                    <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 hover:text-gray-700 transition-colors">
+                        Admin Dashboard
+                    </h1>
                 </div>
-                <div className="px-6">
-                    <nav className="flex items-center space-x-4">
-                        <Link to="/" className="text-gray-600 hover:text-gray-800">Dashboard</Link>
-                        <Link to="/members" className="text-gray-600 hover:text-gray-800">Members</Link>
-                        <Link to="/books" className="text-gray-600 hover:text-gray-800">Books</Link>
+                <div className="w-full md:w-auto">
+                    <nav className="flex flex-wrap justify-center md:justify-end gap-6 text-base font-medium">
+                        <Link to="/" className="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
+                            Dashboard
+                        </Link>
+                        <Link to="/members" className="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
+                            Members
+                        </Link>
+                        <Link to="/books" className="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
+                            Books
+                        </Link>
+                        <Link to={'/book/search'} className="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">
+                            search Books
+                        </Link>
                     </nav>
                 </div>
             </div>            {/* main */}
